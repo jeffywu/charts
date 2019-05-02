@@ -219,6 +219,14 @@ spec:
           value: "/certs/tls/cacerts/cacert.pem"
         - name: CORE_METRICS_PROVIDER
           value: {{ .Values.app.metrics }}
+        {{- if eq .Values.app.metrics "statsd" }}
+        - name: CORE_METRICS_STATSD_NETWORK
+          value: {{ .Values.app.metrics_statsd_network }}
+        - name: CORE_METRICS_STATSD_ADDRESS
+          value: {{ .Values.app.metrics_statsd_address }}
+        - name: CORE_METRICS_STATSD_PREFIX
+          value: {{ .Values.app.metrics_statsd_prefix | default "" }}
+        {{- end }}
         - name: GROUP_ID
           value: "0"
         - name: USER_ID

@@ -224,6 +224,16 @@ spec:
           value: "127.0.0.1:7050"
         - name: USE_WEBSOCKETS
           value: "true"
+        - name: ORDERER_METRICS_PROVIDER
+          value: {{ .Values.app.metrics }}
+        {{- if eq .Values.app.metrics "statsd" }}
+        - name: ORDERER_METRICS_STATSD_NETWORK
+          value: {{ .Values.app.metrics_statsd_network }}
+        - name: ORDERER_METRICS_STATSD_ADDRESS
+          value: {{ .Values.app.metrics_statsd_address }}
+        - name: ORDERER_METRICS_STATSD_PREFIX
+          value: {{ .Values.app.metrics_statsd_prefix | default "" }}
+        {{- end }}
         resources:
 {{ toYaml .Values.proxyResources | indent 12 }}
         securityContext:
